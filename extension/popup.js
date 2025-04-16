@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
   
     function checkBrand(brand) {
       // Example API call to your FastAPI backend
-      fetch(`http://127.0.0.1:8000/score?brand_name=${brand}`)
+      fetch(`http://127.0.0.1:8000/scrape-brand?brand_name=${brand}`)
+
 
         .then(response => response.json())
         .then(data => {

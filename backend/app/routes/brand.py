@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+from app.routes.scrape import scrape_brand
 
 router = APIRouter()
 
@@ -9,16 +10,13 @@ router = APIRouter()
 
 @router.get("/score")
 def score_brand(brand_name: str):
-    brand = brand_name
-    if brand.lower() == "nike":  # Example check
-        return {
-            "brand": "Nike",
-            "score": 72,
-            "summary": "Nike has a moderate reputation for ethical practices."
-        }
+    result = scrape_brand(brand_name)
+    
+    if result:
+        return result
     else:
         return {
-            "brand": brand,
+            "brand": brand_name,
             "score": None,
             "summary": "Brand not found."
         }
