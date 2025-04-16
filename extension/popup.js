@@ -1,32 +1,35 @@
-document.getElementById('checkBtn').addEventListener('click', async () => {
-    const brand = document.getElementById('brandInput').value;
+document.addEventListener('DOMContentLoaded', function () {
+    const checkButton = document.getElementById('checkButton');
+    const brandInput = document.getElementById('brandInput');
     const resultDiv = document.getElementById('result');
   
-    if (!brand) {
-      resultDiv.textContent = 'Please enter a brand name.';
-      return;
-    }
+    checkButton.addEventListener('click', function () {
+      const brandName = brandInput.value;
   
-    try {
-      const response = await fetch("http://127.0.0.1:8000/score", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ brand_name: brand })
-      });
+      if (brandName) {
+        // Call your API or function to check the brand
+        checkBrand(brandName);
+      } else {
+        resultDiv.innerHTML = "Please enter a brand name.";
+      }
+    });
   
-      if (!response.ok) throw new Error("API error");
-  
-      const data = await response.json();
-  
-      resultDiv.innerHTML = `
-        <strong>${data.brand}</strong><br>
-        Score: ${data.score}/100<br>
-        ${data.summary}
-      `;
-    } catch (error) {
-      resultDiv.textContent = "Something went wrong. Is your backend running?";
+    function checkBrand(brand) {
+      // Example API call to your FastAPI backend
+      fetch(`http://127.0.0.1:8000/score?brand_name=${brand}`)
+
+        .then(response => response.json())
+        .then(data => {
+          if (data.score) {
+            resultDiv.innerHTML = `Sustainability Score: ${data.score}`;
+          } else {
+            resultDiv.innerHTML = `Brand not found.`;
+          }
+        })
+        .catch(err => {
+          resultDiv.innerHTML = "Error checking brand.";
+          console.error(err);
+        });
     }
   });
   

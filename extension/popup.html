@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
   <title>EcoShop AI</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <div id="popup">
-    <h1>🌱 EcoShop AI</h1>
-    <p id="brand-name">Brand: ...</p>
-    <p id="score">Score: ...</p>
-    <button id="analyze">Analyze Brand</button>
+  <div class="popup-container">
+    <h2>EcoShop AI</h2>
+    <input type="text" id="brandInput" placeholder="Enter a brand (e.g., Nike)" />
+    <button id="checkButton">Check Brand</button>
+    <div id="result"></div>
   </div>
   <script src="popup.js"></script>
 </body>
